@@ -6,9 +6,9 @@
 # Contributors:
 # Codenvy, S.A. - initial API and implementation
 
-FROM ubuntu:16.04
+FROM multiarch/ubuntu-core:arm64-xenial
 
-ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-arm64
 ENV PATH=$JAVA_HOME/bin:$PATH
 RUN apt-get update && \
     apt-get -y install \
@@ -30,13 +30,14 @@ RUN apt-get update && \
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     useradd -u 1000 -G users,sudo -d /home/user --shell /bin/bash -m user && \
     usermod -p "*" user && \
-    add-apt-repository ppa:git-core/ppa && \
-    add-apt-repository ppa:openjdk-r/ppa && \
+#    add-apt-repository ppa:git-core/ppa && \
+#    add-apt-repository ppa:openjdk-r/ppa && \
     apt-get update && \
     sudo apt-get install git subversion -y && \
     apt-get clean && \
     apt-get -y autoremove && \
-    sudo apt-get install openjdk-8-jdk-headless=8u131-b11-2ubuntu1.16.04.3 openjdk-8-source=8u131-b11-2ubuntu1.16.04.3 -y && \
+#    sudo apt-get install openjdk-8-jdk-headless=8u131-b11-2ubuntu1.16.04.3 openjdk-8-source=8u131-b11-2ubuntu1.16.04.3 -y && \
+    sudo apt-get install openjdk-8-jdk-headless openjdk-8-source -y && \
     sudo update-ca-certificates -f && \
     sudo sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure && \
     apt-get -y clean && \
